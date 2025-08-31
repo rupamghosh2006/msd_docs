@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Maths with SD – docs</title>
+    <meta name="description" content="Professional problem statement and client requirements for a secure assessment platform, presented as a static web page using Tailwind CSS." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Print-friendly: keep background white when printing */
+      @media print {
+        body { background: #ffffff !important; }
+        .no-print { display: none !important; }
+        .card { box-shadow: none !important; border: 1px solid #e5e7eb; }
+      }
+      
+      /* Dark mode transitions */
+      * {
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 text-slate-800 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 dark:text-slate-200">
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-50 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-700">
+      <div class="mx-auto max-w-5xl px-4">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo/Brand -->
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center">
+              <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5 text-white">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2Z"/>
+              </svg> -->
+              <img class="rounded-full" src="logo.png" alt="logo">
+            </div>
+            <span class="font-bold text-slate-900 dark:text-slate-100">Maths with SD</span>
+          </div>
+          
+          <!-- Navigation Links -->
+          <div class="hidden md:flex items-center space-x-6">
+            <a href="#context" class="nav-link text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Context</a>
+            <a href="#problem" class="nav-link text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Problem</a>
+            <a href="#requirements" class="nav-link text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Requirements</a>
+            <a href="#solutions" class="nav-link text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Solutions</a>
+            <a href="#tech-stack" class="nav-link text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Tech Stack</a>
+          </div>
+          
+          <!-- Mobile menu button -->
+          <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-600 dark:text-slate-300">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+              <path d="M3 12h18M3 6h18M3 18h18"/>
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden pb-4">
+          <div class="flex flex-col space-y-2">
+            <a href="#context" class="nav-link block px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Context</a>
+            <a href="#problem" class="nav-link block px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Problem</a>
+            <a href="#requirements" class="nav-link block px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Requirements</a>
+            <a href="#solutions" class="nav-link block px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Solutions</a>
+            <a href="#tech-stack" class="nav-link block px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Tech Stack</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page wrapper -->
+    <div class="mx-auto max-w-5xl px-4 py-10 sm:py-14">
+      <!-- Header -->
+      <header class="mb-8">
+        <div class="flex items-start justify-between">
+          <div>
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+              Maths with SD Documentation
+            </h1>
+          </div>
+          <!-- Actions -->
+         <div class="no-print flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+          <!-- Dark mode toggle -->
+          <button 
+            onclick="toggleDarkMode()" 
+            class="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-2 text-sm font-medium shadow-sm hover:shadow transition w-full sm:w-auto">
+            <!-- Sun icon (visible in dark mode) -->
+            <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="h-4 w-4 hidden dark:block">
+              <circle cx="12" cy="12" r="5"/>
+              <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+            <!-- Moon icon (visible in light mode) -->
+            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="h-4 w-4 block dark:hidden">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/>
+            </svg>
+            <span class="hidden dark:inline">Light</span>
+            <span class="inline dark:hidden">Dark</span>
+          </button>
+
+          <!-- Print button -->
+          <button 
+            onclick="window.print()" 
+            class="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-2 text-sm font-medium shadow-sm hover:shadow transition w-full sm:w-auto">
+            <!-- Printer icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="h-4 w-4">
+              <path d="M6 7V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3"/>
+              <path d="M6 17H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/>
+              <path d="M6 13h12v7a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-7Z"/>
+            </svg>
+            Print / Save PDF
+          </button>
+        </div>
+        </div>
+      </header>
+
+      <!-- Intro card -->
+      <section id="context" class="card rounded-3xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 backdrop-blur p-6 sm:p-8 shadow">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-indigo-600 text-white">
+            <!-- Info icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 8h.01M11 12h2v4h-2z"/>
+            </svg>
+          </span>
+          <h2 class="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-slate-100">Context</h2>
+        </div>
+        <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+          A dedicated web application is proposed to streamline secure classroom assessments for a mathematics teacher who has outgrown the limitations of general-purpose survey tools.
+        </p>
+      </section>
+
+      <!-- Problem Statement -->
+      <section id="problem" class="card mt-8 rounded-3xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 backdrop-blur p-6 sm:p-8 shadow">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-rose-600 text-white">
+            <!-- Alert icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+              <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/>
+              <path d="M12 9v4"/><path d="M12 17h.01"/>
+            </svg>
+          </span>
+          <h2 class="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-slate-100">🔹 Problem Statement</h2>
+        </div>
+        <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+          Traditional online testing tools, such as Google Forms, while convenient, often fall short when it comes to <strong>efficiency, security, and automation</strong> in conducting academic assessments.
+        </p>
+
+        <p class="mt-4 text-slate-700 dark:text-slate-300">A mathematics teacher faced the following challenges in managing class tests:</p>
+        <ol class="mt-3 space-y-4 list-decimal pl-5">
+          <li>
+            <p class="font-medium text-slate-900 dark:text-slate-100">Manual Test Creation</p>
+            <ul class="mt-1 list-disc pl-5 text-slate-700 dark:text-slate-300">
+              <li>Every time a test was scheduled, the teacher had to manually create a new Google Form.</li>
+              <li>Uploading questions, setting options, and formatting were highly <strong>time-consuming and repetitive</strong>.</li>
+            </ul>
+          </li>
+          <li>
+            <p class="font-medium text-slate-900 dark:text-slate-100">Lack of Security in Google Forms</p>
+            <ul class="mt-1 list-disc pl-5 text-slate-700 dark:text-slate-300">
+              <li>Google Forms provided minimal control over <strong>cheating prevention</strong>.</li>
+              <li>Students could easily share forms, reattempt using multiple accounts, or collaborate during tests.</li>
+              <li>No proctoring or monitoring features were available.</li>
+            </ul>
+          </li>
+          <li>
+            <p class="font-medium text-slate-900 dark:text-slate-100">Inefficient Question Management</p>
+            <ul class="mt-1 list-disc pl-5 text-slate-700 dark:text-slate-300">
+              <li>There was no <strong>centralized question bank</strong>. Each test had to be created from scratch.</li>
+              <li>If the teacher had a collection of previous question papers (images or PDFs), there was no direct way to reuse or digitise them.</li>
+            </ul>
+          </li>
+          <li>
+            <p class="font-medium text-slate-900 dark:text-slate-100">Test Randomization &amp; Scheduling Limitations</p>
+            <ul class="mt-1 list-disc pl-5 text-slate-700 dark:text-slate-300">
+              <li>All students received the same set of questions, making it easier to share answers.</li>
+              <li>There was no mechanism to <strong>automatically randomise questions</strong> or generate <strong>unique sets for each student</strong>.</li>
+              <li>Google Forms lacked proper <strong>test scheduling and automation</strong> features.</li>
+            </ul>
+          </li>
+          <li>
+            <p class="font-medium text-slate-900 dark:text-slate-100">Post-Test Analysis Limitations</p>
+            <ul class="mt-1 list-disc pl-5 text-slate-700 dark:text-slate-300">
+              <li>The teacher needed a <strong>leaderboard</strong> to instantly evaluate student performance in a comparative format.</li>
+              <li>Downloading and sharing results in a professional format like <strong>PDF</strong> was not directly supported.</li>
+            </ul>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Client Requirements -->
+      <section id="requirements" class="card mt-8 rounded-3xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 backdrop-blur p-6 sm:p-8 shadow">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-emerald-600 text-white">
+            <!-- List/check icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+          </span>
+          <h2 class="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-slate-100">🔹 Client Requirements</h2>
+        </div>
+        <p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+          To overcome these challenges, the teacher envisioned a <strong>dedicated web application</strong> with the following requirements:
+        </p>
+
+        <div class="mt-5 grid gap-6 sm:grid-cols-2">
+          <!-- Teacher Dashboard -->
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 p-5 shadow-sm">
+            <h3 class="flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-slate-100">
+              <!-- Dashboard icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+                <rect x="3" y="3" width="7" height="7" rx="1"/>
+                <rect x="14" y="3" width="7" height="7" rx="1"/>
+                <rect x="14" y="14" width="7" height="7" rx="1"/>
+                <rect x="3" y="14" width="7" height="7" rx="1"/>
+              </svg>
+              Teacher Dashboard
+            </h3>
+            <ul class="mt-2 list-disc pl-5 text-slate-700 dark:text-slate-300">
+              <li>Upload questions in <strong>image or PDF</strong> format.</li>
+              <li>An integrated <strong>OCR</strong> (Optical Character Recognition) to automatically recognise and digitise content.</li>
+              <li>Store extracted questions in a <strong>centralised question bank</strong> for easy reuse.</li>
+            </ul>
+          </div>
+
+          <!-- Test Management & Scheduling -->
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 p-5 shadow-sm">
+            <h3 class="flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-slate-100">
+              <!-- Calendar icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <path d="M16 2v4M8 2v4M3 10h18"/>
+              </svg>
+              Test Management &amp; Scheduling
+            </h3>
+            <ul class="mt-2 list-disc pl-5 text-slate-700 dark:text-slate-300">
+              <li>Option to schedule tests in advance.</li>
+              <li>Automatic generation of <strong>randomised question sets</strong> for each student, ensuring fairness and reducing chances of cheating.</li>
+            </ul>
+          </div>
+
+          <!-- Security Features -->
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 p-5 shadow-sm">
+            <h3 class="flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-slate-100">
+              <!-- Shield icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
+              </svg>
+              Student Security Features
+            </h3>
+            <ul class="mt-2 list-disc pl-5 text-slate-700 dark:text-slate-300">
+              <li>Enhanced exam security measures such as restricted navigation.</li>
+              <li>Random question shuffling.</li>
+            </ul>
+          </div>
+
+          <!-- Results & Leaderboard -->
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 p-5 shadow-sm">
+            <h3 class="flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-slate-100">
+              <!-- Trophy icon -->
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+                <path d="M8 21h8"/>
+                <path d="M12 17v4"/>
+                <path d="M7 4h10v4a5 5 0 0 1-5 5 5 5 0 0 1-5-5V4Z"/>
+                <path d="M5 9a3 3 0 0 1-3-3V4h5"/>
+                <path d="M19 9a3 3 0 0 0 3-3V4h-5"/>
+              </svg>
+              Result Processing &amp; Leaderboard
+            </h3>
+            <ul class="mt-2 list-disc pl-5 text-slate-700 dark:text-slate-300">
+              <li>Automatic evaluation of tests.</li>
+              <li>A downloadable <strong>leaderboard view</strong> for teachers to instantly compare students' performance.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Solutions & Features -->
+<section id="solutions" class="card mt-8 rounded-3xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 backdrop-blur p-6 sm:p-8 shadow">
+  <div class="flex items-center gap-3 mb-4">
+    <span class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-blue-600 text-white">
+      <!-- Lightbulb icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+        <path d="M9 21h6"/>
+        <path d="M12 17v4"/>
+        <path d="M12 3a6 6 0 0 1 6 6c0 3-2 5.5-2 8H8c0-2.5-2-5-2-8a6 6 0 0 1 6-6Z"/>
+      </svg>
+    </span>
+    <h2 class="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-slate-100">🔹 Proposed Solutions & Features</h2>
+  </div>
+
+  <div class="grid gap-6 lg:grid-cols-2">
+    <!-- Left column: Teacher Dashboard Features -->
+    <div class="space-y-4">
+      <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Teacher Dashboard</h3>
+
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 p-4">
+        <h4 class="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">1) Scan Question</h4>
+        <ul class="mt-2 list-disc pl-5 text-sm text-slate-600 dark:text-slate-400">
+          <li>Upload questions as <strong>image</strong> or <strong>PDF</strong> and click <em>Extract Questions</em>.</li>
+          <li>OCR extracts MCQ questions and auto-populates editable fields: question text, four options, and KaTeX preview for mathematical notation.</li>
+          <li>Optional: attach diagrams (image uploads) per question.</li>
+          <li>Teacher selects correct option, class, chapter, and language (Bengali / English) before saving.</li>
+          <li>Save pushes the item into the centralized <strong>Question Bank</strong>.</li>
+          <a href="https://res.cloudinary.com/your-cloudinary-video-link" target="_blank">▶ View Demo</a>
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 p-4">
+        <h4 class="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">2) Question Bank</h4>
+        <ul class="mt-2 list-disc pl-5 text-sm text-slate-600 dark:text-slate-400">
+          <li>View all saved questions with metadata (class, chapter, language, difficulty).</li>
+          <li>Filter by class, subject, chapter and search by keywords.</li>
+          <li>Edit or delete questions; updates are versioned for audit (optional).</li>
+          <a href="https://res.cloudinary.com/your-cloudinary-video-link" target="_blank">▶ View Demo</a>
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 p-4">
+        <h4 class="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">3) Manage Students</h4>
+        <ul class="mt-2 list-disc pl-5 text-sm text-slate-600 dark:text-slate-400">
+          <li>View pending registration requests; approve or reject student accounts.</li>
+          <li>Remove existing students.</li>
+          <a href="https://res.cloudinary.com/your-cloudinary-video-link" target="_blank">▶ View Demo</a>
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 p-4">
+        <h4 class="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">4) Create Test</h4>
+        <ul class="mt-2 list-disc pl-5 text-sm text-slate-600 dark:text-slate-400">
+          <li>Schedule tests by selecting date, time, duration, total marks, target class, language, and chapters.</li>
+          <li>Auto-generate randomized sets while preserving overall weightage so no two students have identical papers.</li>
+          <a href="https://res.cloudinary.com/your-cloudinary-video-link" target="_blank">▶ View Demo</a>
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 p-4">
+        <h4 class="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">5) Old Test Configs</h4>
+        <ul class="mt-2 list-disc pl-5 text-sm text-slate-600 dark:text-slate-400">
+          <li>Archive of previous test configurations and metadata (date, class, language, marks, chapters).</li>
+          <li>View or delete old test configs.</li>
+          <a href="https://res.cloudinary.com/your-cloudinary-video-link" target="_blank">▶ View Demo</a>
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 p-4">
+        <h4 class="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">6) Leaderboard</h4>
+        <ul class="mt-2 list-disc pl-5 text-sm text-slate-600 dark:text-slate-400">
+          <li>View leaderboards with flexible filters: class (e.g., 11, 12), language (Bengali, English).</li>
+          <li>Sorted primarily by marks and secondarily by time taken to break ties.</li>
+          <li>Download leaderboards as printable PDF reports.</li>
+          <a href="https://res.cloudinary.com/your-cloudinary-video-link" target="_blank">▶ View Demo</a>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Right column: Student Dashboard Features -->
+    <div class="space-y-4">
+      <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">Student Dashboard</h3>
+
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 p-4">
+        <h4 class="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">1) Landing Page</h4>
+        <ul class="mt-2 list-disc pl-5 text-sm text-slate-600 dark:text-slate-400">
+          <li>Accessible after registration and teacher verification.</li>
+          <li>Shows upcoming tests, announcements, profile, and previous test results.</li>
+          <a href="https://res.cloudinary.com/your-cloudinary-video-link" target="_blank">▶ View Demo</a>
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 p-4">
+        <h4 class="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">2) Test Page</h4>
+        <ul class="mt-2 list-disc pl-5 text-sm text-slate-600 dark:text-slate-400">
+          <li>Available only once the test timer starts; the page opens in <strong>fullscreen</strong>.</li>
+          <li>If the student exits fullscreen (presses ESC or switches tabs), the test is <strong>auto-submitted</strong> and cannot be retaken.</li>
+          <li>Questions are randomly selected while preserving overall weightage. No two students receive the exact same set.</li>
+          <li>Robust anti-cheating measures such as tab-switch detection and session locking are enforced.</li>
+          <a href="https://res.cloudinary.com/your-cloudinary-video-link" target="_blank">▶ View Demo</a>
+        </ul>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 p-4">
+        <h4 class="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">3) Result Page</h4>
+        <ul class="mt-2 list-disc pl-5 text-sm text-slate-600 dark:text-slate-400">
+          <li>Auto-evaluation upon submission with immediate provisional scores.</li>
+          <li>Detailed analysis available after the test window closes: option marked and correct option if marked wrong.</li>
+          <a href="https://res.cloudinary.com/your-cloudinary-video-link" target="_blank">▶ View Demo</a>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+      <!-- Tech Stack -->
+      <section id="tech-stack" class="card mt-8 rounded-3xl border border-slate-200 dark:border-slate-700 bg-white/80 dark:bg-slate-800/80 backdrop-blur p-6 sm:p-8 shadow">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-purple-600 text-white">
+            <!-- Code icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+              <polyline points="16,18 22,12 16,6"/>
+              <polyline points="8,6 2,12 8,18"/>
+            </svg>
+          </span>
+          <h2 class="text-xl sm:text-2xl font-semibold text-slate-900 dark:text-slate-100">🔹 Technology Stack</h2>
+        </div>
+
+         <div class="grid gap-6 md:grid-cols-3">
+            <!-- Frontend -->
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-600 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-5">
+                <h3 class="flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-slate-100 mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+                        <rect x="2" y="2" width="20" height="20" rx="2"/>
+                        <path d="M7 12h10M7 8h6M7 16h4"/>
+                    </svg>
+                    Frontend
+                </h3>
+                <div class="space-y-3 text-sm">
+                    <!-- Astro -->
+                    <div class="flex items-center gap-3">
+                        <svg  class="w-5 h-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 100 100">
+                        <path fill="#FF5D01" d="M35.696 85.174c-4.502-4.13-5.816-12.807-3.94-19.093 3.252 3.963 7.758 5.219 12.426 5.927 7.206 1.094 14.283.685 20.977-2.62.766-.378 1.473-.881 2.31-1.39.629 1.827.792 3.674.573 5.552-.534 4.576-2.803 8.111-6.413 10.79-1.443 1.072-2.97 2.03-4.461 3.04-4.58 3.107-5.818 6.749-4.098 12.046.041.13.078.258.17.573-2.338-1.05-4.046-2.578-5.347-4.589-1.375-2.121-2.029-4.468-2.063-7.008-.017-1.236-.017-2.483-.183-3.7-.404-2.97-1.794-4.3-4.412-4.378-2.687-.078-4.812 1.588-5.375 4.213-.043.201-.106.4-.168.634z"/>
+                        <path fill="#000014" d="M10 65.034s13.332-6.517 26.7-6.517l10.08-31.302c.377-1.514 1.48-2.543 2.723-2.543 1.244 0 2.346 1.029 2.723 2.543l10.08 31.302c15.834 0 26.7 6.517 26.7 6.517L66.318 3.008c-.65-1.83-1.746-3.009-3.226-3.009H35.918c-1.48 0-2.532 1.179-3.227 3.009C32.642 3.13 10 65.034 10 65.034"/>
+                        </svg>
+                        <span class="text-slate-700 dark:text-slate-300">Astro</span>
+                    </div>
+                    
+                    <!-- React -->
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-blue-500"xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 101 100">
+                          <path fill="#61DAFB" d="M50.307 58.816a8.816 8.816 0 1 0 0-17.632 8.816 8.816 0 0 0 0 17.632"/>
+                          <path stroke="#61DAFB" stroke-width="5" d="M50.307 68.063c26.126 0 47.306-8.087 47.306-18.063s-21.18-18.062-47.306-18.062C24.18 31.938 3 40.024 3 50s21.18 18.063 47.307 18.063Z"/>
+                          <path stroke="#61DAFB" stroke-width="5" d="M34.664 59.031C47.727 81.658 65.321 95.957 73.96 90.97c8.64-4.988 5.053-27.374-8.01-50C52.885 18.342 35.291 4.043 26.652 9.03s-5.052 27.374 8.011 50Z"/>
+                          <path stroke="#61DAFB" stroke-width="5" d="M34.664 40.969c-13.063 22.626-16.65 45.012-8.01 50 8.638 4.988 26.232-9.311 39.295-31.938s16.65-45.012 8.01-50c-8.638-4.988-26.232 9.311-39.295 31.938Z"/>
+                        </svg>
+                        <span class="text-slate-700 dark:text-slate-300">React.js</span>
+                    </div>
+                    
+                    <!-- TypeScript -->
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 100 100">
+                        <path fill="#017ACB" d="M0 0h100v100H0z"/>
+                        <path fill="#fff" d="M48.016 37.031h4.797v8.282h-12.97v36.843l-.343.094c-.469.125-6.64.125-7.969-.016l-1.062-.093V45.312H17.5v-8.28l4.11-.048c2.25-.03 8.03-.03 12.843 0 4.813.032 10.906.047 13.563.047m36.61 41.219c-1.907 2.016-3.954 3.14-7.36 4.063-1.485.406-1.735.421-5.078.406-3.344-.016-3.61-.016-5.235-.438-4.203-1.078-7.594-3.187-9.906-6.172-.656-.843-1.734-2.593-1.734-2.812 0-.063.156-.203.359-.297s.625-.36.969-.562c.343-.204.968-.579 1.39-.797.422-.22 1.64-.938 2.703-1.579 1.063-.64 2.032-1.156 2.141-1.156.11 0 .313.219.469.485.937 1.578 3.125 3.593 4.672 4.28.953.407 3.062.86 4.078.86.937 0 2.656-.406 3.578-.828.984-.453 1.484-.906 2.078-1.812.406-.641.453-.813.438-2.032 0-1.125-.063-1.437-.375-1.953-.875-1.437-2.063-2.187-6.875-4.312-4.97-2.203-7.204-3.516-9.016-5.282-1.344-1.312-1.61-1.67-2.453-3.312-1.094-2.11-1.235-2.797-1.25-5.937-.016-2.204.031-2.922.265-3.672.329-1.125 1.391-3.297 1.875-3.844 1-1.172 1.36-1.531 2.063-2.11 2.125-1.75 5.438-2.906 8.61-3.015.359 0 1.546.062 2.656.14 3.187.266 5.359 1.047 7.453 2.72 1.578 1.25 3.968 4.187 3.734 4.577-.156.235-6.39 4.391-6.797 4.516-.25.078-.422-.016-.765-.422-2.125-2.547-2.985-3.094-5.047-3.219-1.469-.093-2.25.078-3.235.735-1.03.687-1.53 1.734-1.53 3.187.015 2.125.827 3.125 3.827 4.61 1.938.953 3.594 1.734 3.719 1.734.188 0 4.203 2 5.25 2.625 4.875 2.86 6.86 5.797 7.375 10.86.375 3.812-.703 7.296-3.047 9.765"/>
+                        </svg>
+                        <span class="text-slate-700 dark:text-slate-300">TypeScript</span>
+                    </div>
+                    
+                    <!-- Tailwind CSS -->
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-cyan-500" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 6c-2.67 0-4.33 1.33-5 4 1-1.33 2.17-1.83 3.5-1.5.76.19 1.31.74 1.91 1.35.98 1 2.12 2.15 4.59 2.15 2.67 0 4.33-1.33 5-4-1 1.33-2.17 1.83-3.5 1.5-.76-.19-1.31-.74-1.91-1.35C15.61 7.15 14.47 6 12 6zM7 12c-2.67 0-4.33 1.33-5 4 1-1.33 2.17-1.83 3.5-1.5.76.19 1.31.74 1.91 1.35C8.39 16.85 9.53 18 12 18c2.67 0 4.33-1.33 5-4-1 1.33-2.17 1.83-3.5 1.5-.76-.19-1.31-.74-1.91-1.35C10.61 13.15 9.47 12 7 12z"/>
+                        </svg>
+                        <span class="text-slate-700 dark:text-slate-300">Tailwind CSS</span>
+                    </div>
+                    
+                    <!-- Lucide Icons -->
+                    <div class="flex items-center gap-3">
+                        <img class="w-5 h-5 text-blue-500 rounded-full" src="data:image/png;base64,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" alt="lucide logo">
+                        <span class="text-slate-700 dark:text-slate-300">Lucide Icons</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Backend -->
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-600 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 p-5">
+                <h3 class="flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-slate-100 mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+                        <rect x="2" y="3" width="20" height="14" rx="2"/>
+                        <path d="M8 21h8M12 17v4"/>
+                    </svg>
+                    Backend
+                </h3>
+                <div class="space-y-3 text-sm">
+                    <!-- Node.js / Express -->
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm8.16 17.32L12 21.78l-8.16-4.46V6.22L12 2.22l8.16 4v11.1z"/>
+                            <path d="M12 6.5L7 9v6l5 2.5 5-2.5V9l-5-2.5zm3 8.5l-3 1.5L9 15v-4l3-1.5L15 11v4z"/>
+                        </svg>
+                        <span class="text-slate-700 dark:text-slate-300">Node.js / Express</span>
+                    </div>
+                    
+                    <!-- TypeScript -->
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 100 100">
+                        <path fill="#017ACB" d="M0 0h100v100H0z"/>
+                        <path fill="#fff" d="M48.016 37.031h4.797v8.282h-12.97v36.843l-.343.094c-.469.125-6.64.125-7.969-.016l-1.062-.093V45.312H17.5v-8.28l4.11-.048c2.25-.03 8.03-.03 12.843 0 4.813.032 10.906.047 13.563.047m36.61 41.219c-1.907 2.016-3.954 3.14-7.36 4.063-1.485.406-1.735.421-5.078.406-3.344-.016-3.61-.016-5.235-.438-4.203-1.078-7.594-3.187-9.906-6.172-.656-.843-1.734-2.593-1.734-2.812 0-.063.156-.203.359-.297s.625-.36.969-.562c.343-.204.968-.579 1.39-.797.422-.22 1.64-.938 2.703-1.579 1.063-.64 2.032-1.156 2.141-1.156.11 0 .313.219.469.485.937 1.578 3.125 3.593 4.672 4.28.953.407 3.062.86 4.078.86.937 0 2.656-.406 3.578-.828.984-.453 1.484-.906 2.078-1.812.406-.641.453-.813.438-2.032 0-1.125-.063-1.437-.375-1.953-.875-1.437-2.063-2.187-6.875-4.312-4.97-2.203-7.204-3.516-9.016-5.282-1.344-1.312-1.61-1.67-2.453-3.312-1.094-2.11-1.235-2.797-1.25-5.937-.016-2.204.031-2.922.265-3.672.329-1.125 1.391-3.297 1.875-3.844 1-1.172 1.36-1.531 2.063-2.11 2.125-1.75 5.438-2.906 8.61-3.015.359 0 1.546.062 2.656.14 3.187.266 5.359 1.047 7.453 2.72 1.578 1.25 3.968 4.187 3.734 4.577-.156.235-6.39 4.391-6.797 4.516-.25.078-.422-.016-.765-.422-2.125-2.547-2.985-3.094-5.047-3.219-1.469-.093-2.25.078-3.235.735-1.03.687-1.53 1.734-1.53 3.187.015 2.125.827 3.125 3.827 4.61 1.938.953 3.594 1.734 3.719 1.734.188 0 4.203 2 5.25 2.625 4.875 2.86 6.86 5.797 7.375 10.86.375 3.812-.703 7.296-3.047 9.765"/>
+                        </svg>
+                        <span class="text-slate-700 dark:text-slate-300">TypeScript</span>
+                    </div>
+                    
+                    <!-- Mongoose -->
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-emerald-600" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12.5 2.1l.4 2.3c.8 4.7 4.1 8.6 7.6 11.5l-.2.4c-3.4-2.8-6.5-6.5-7.2-11L12.5 2.1zm-1 0l-.6 3.3c-.7 4.5-3.8 8.2-7.2 11l-.2-.4c3.5-2.9 6.8-6.8 7.6-11.5l.4-2.4z"/>
+                            <path d="M12 16c-1.5 0-3-1.2-3-3s1.5-3 3-3 3 1.2 3 3-1.5 3-3 3zm0-4.5c-.8 0-1.5.7-1.5 1.5s.7 1.5 1.5 1.5 1.5-.7 1.5-1.5-.7-1.5-1.5-1.5z"/>
+                            <circle cx="12" cy="19" r="2"/>
+                        </svg>
+                        <span class="text-slate-700 dark:text-slate-300">Mongoose</span>
+                    </div>
+                    
+                    <!-- JWT Authentication -->
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-teal-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <circle cx="12" cy="16" r="1"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        <span class="text-slate-700 dark:text-slate-300">JWT Authentication</span>
+                    </div>
+                    
+                    <!-- RESTful APIs -->
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-lime-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.27,6.96 12,12.01 20.73,6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                        <span class="text-slate-700 dark:text-slate-300">RESTful APIs</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Database & AI -->
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-600 bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 p-5">
+                <h3 class="flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-slate-100 mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5">
+                        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                        <path d="M3 5v14a9 3 0 0 0 18 0V5"/>
+                    </svg>
+                    Database & AI
+                </h3>
+                <div class="space-y-3 text-sm">
+                    <!-- MongoDB -->
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-green-600" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12.74 23.73c-.13.01-.26.01-.39.01h-.7c-.13 0-.26 0-.39-.01-.11-.01-.21-.02-.32-.03-.1-.01-.21-.02-.31-.04-.1-.02-.2-.03-.3-.05-.1-.02-.19-.04-.28-.06-.09-.02-.18-.04-.27-.07-.09-.02-.17-.05-.26-.07-.08-.03-.16-.05-.24-.08-.08-.03-.15-.06-.23-.09-.07-.03-.14-.06-.21-.1-.07-.03-.13-.07-.2-.1-.06-.04-.12-.08-.18-.12-.06-.04-.11-.08-.17-.12-.05-.04-.1-.09-.15-.13-.05-.04-.09-.09-.14-.13-.04-.05-.08-.1-.12-.15-.04-.05-.08-.1-.11-.16-.04-.05-.07-.11-.1-.16-.03-.06-.06-.12-.08-.18-.03-.06-.05-.12-.07-.19-.02-.06-.04-.13-.06-.19-.02-.07-.03-.14-.04-.21-.01-.07-.02-.14-.03-.21-.01-.07-.01-.15-.02-.22 0-.08-.01-.15-.01-.23 0-.08 0-.16 0-.24v-1.48c0-.08 0-.16 0-.24 0-.08.01-.15.01-.23.01-.07.01-.15.02-.22.01-.07.02-.14.03-.21.01-.07.02-.14.04-.21.02-.06.04-.13.06-.19.02-.07.04-.13.07-.19.02-.06.05-.12.08-.18.03-.06.06-.11.1-.16.03-.05.07-.11.11-.16.04-.05.08-.1.12-.15.05-.04.09-.08.14-.13.05-.04.1-.09.15-.13.06-.04.11-.08.17-.12.06-.04.12-.08.18-.12.07-.03.13-.07.2-.1.07-.04.14-.07.21-.1.08-.03.15-.06.23-.09.08-.03.16-.05.24-.08.09-.02.17-.05.26-.07.09-.03.18-.05.27-.07.09-.02.18-.04.28-.06.1-.02.2-.03.3-.05.1-.02.21-.03.31-.04.11-.01.21-.02.32-.03.13-.01.26-.01.39-.01h.7c.13 0 .26 0 .39.01.11.01.21.02.32.03.1.01.21.02.31.04.1.02.2.03.3.05.1.02.19.04.28.06.09.02.18.04.27.07.09.02.17.05.26.07.08.03.16.05.24.08.08.03.15.06.23.09.07.03.14.06.21.1.07.03.13.06.2.1.06.04.12.08.18.12.06.04.11.08.17.12.05.04.1.09.15.13.05.05.09.09.14.13.04.05.08.1.12.15.04.05.08.11.11.16.04.05.07.1.1.16.03.06.06.12.08.18.03.06.05.12.07.19.02.06.04.13.06.19.02.07.03.14.04.21.01.07.02.14.03.21.01.07.01.15.02.22 0 .08.01.15.01.23 0 .08 0 .16 0 .24v1.48c0 .08 0 .16 0 .24 0 .08-.01.15-.01.23-.01.07-.01.15-.02.22-.01.07-.02.14-.03.21-.01.07-.02.14-.04.21-.02.06-.04.13-.06.19-.02.07-.04.13-.07.19-.02.06-.05.12-.08.18-.03.05-.06.11-.1.16-.03.05-.07.11-.11.16-.04.05-.08.1-.12.15-.05.04-.09.08-.14.13-.05.04-.1.09-.15.13-.06.04-.11.08-.17.12-.06.04-.12.08-.18.12-.07.03-.13.07-.2.1-.07.04-.14.07-.21.1-.08.03-.15.06-.23.09-.08.03-.16.05-.24.08-.09.02-.17.05-.26.07-.09.03-.18.05-.27.07-.09.02-.18.04-.28.06-.1.02-.2.03-.3.05-.1.02-.21.03-.31.04-.11.01-.21.02-.32.03z"/>
+                        </svg>
+                        <span class="text-slate-700 dark:text-slate-300">MongoDB</span>
+                    </div>
+                    
+                    <!-- MathPix (OCR) -->
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-red-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                        <span class="text-slate-700 dark:text-slate-300">MathPix (OCR)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Highlights -->
+        <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="flex items-start gap-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 p-4">
+            <div class="flex-shrink-0 w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4 text-blue-600 dark:text-blue-400">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-medium text-slate-900 dark:text-slate-100">Auto-Grading</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Instant results with detailed analytics</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 p-4">
+            <div class="flex-shrink-0 w-8 h-8 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4 text-green-600 dark:text-green-400">
+                <path d="M12 6v12M6 12h12"/>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-medium text-slate-900 dark:text-slate-100">Multi-Format Support</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">MCQ, short answer, and essay questions</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 p-4">
+            <div class="flex-shrink-0 w-8 h-8 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-4 w-4 text-purple-600 dark:text-purple-400">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+              <polyline points="7.5,4.21 12,6.81 16.5,4.21"/>
+              <polyline points="7.5,19.79 7.5,14.6 3,12"/>
+              <polyline points="21,12 16.5,14.6 16.5,19.79"/>
+            </svg>
+            </div>
+            <div>
+              <h4 class="font-medium text-slate-900 dark:text-slate-100">Cloud Deployment</h4>
+              <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Scalable hosting with 99.9% uptime</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="mt-10 text-center text-sm text-slate-500 dark:text-slate-400">
+        <p>
+          © <span id="year"></span> Maths with SD – Documentation Page
+        </p>
+        <br>
+         <p>
+          <span>Made with ❤️ by <i>RupanDos</i>.</span>
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      // Set current year
+      document.getElementById('year').textContent = new Date().getFullYear();
+      
+      // Dark mode functionality
+      function toggleDarkMode() {
+        document.documentElement.classList.toggle('dark');
+        // Store preference in memory (not localStorage as per restrictions)
+        window.darkModeEnabled = document.documentElement.classList.contains('dark');
+      }
+      
+      // Initialize dark mode based on system preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+        window.darkModeEnabled = true;
+      }
+      
+      // Mobile menu functionality
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+      
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetId = link.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            const offsetTop = targetElement.offsetTop - 80; // Account for fixed nav
+            window.scrollTo({
+              top: offsetTop,
+              behavior: 'smooth'
+            });
+            
+            // Close mobile menu if open
+            mobileMenu.classList.add('hidden');
+          }
+        });
+      });
+      
+      // Highlight active section in navigation
+      function updateActiveNavLink() {
+        const sections = ['context', 'problem', 'requirements', 'solutions', 'tech-stack'];
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        let activeSection = '';
+        
+        sections.forEach(section => {
+          const element = document.getElementById(section);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            if (rect.top <= 100 && rect.bottom >= 100) {
+              activeSection = section;
+            }
+          }
+        });
+        
+        navLinks.forEach(link => {
+          const href = link.getAttribute('href').substring(1); // Remove #
+          if (href === activeSection) {
+            link.classList.add('text-indigo-600', 'dark:text-indigo-400');
+            link.classList.remove('text-slate-600', 'dark:text-slate-300');
+          } else {
+            link.classList.remove('text-indigo-600', 'dark:text-indigo-400');
+            link.classList.add('text-slate-600', 'dark:text-slate-300');
+          }
+        });
+      }
+      
+      // Update active nav link on scroll
+      window.addEventListener('scroll', updateActiveNavLink);
+      
+      // Initial call to set active link
+      updateActiveNavLink();
+    </script>
+  </body>
+</html>
